@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+</head>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8">
+    <title> Loan Services Department</title>
+    <style>
+	body {font-family: Arial;}
+
+	/* style the header */
+	.header {
+	text-align = center;
+	text-color = green;
+	background-color:#C5A78B ;
+	max-width:400px;
+	border: 1px, solid;
+	text-align:center;
+	}
+
+	label, input{
+	margin:15px;
+	}
+
+	form {
+		max-width: 350px;
+		border: 1px, solid, grey;
+		text-align:right;
+	}
+	.footer {
+	text-align:left;
+	}
+	.formBtn {
+	text-align = center;
+	}
+
+
+
+	/* Style the tab */
+	.tab {
+	  overflow: hidden;
+	  border: 1px solid #ccc;
+	  background-color: #f1f1f1;
+	}
+
+	/* Style the buttons inside the tab */
+	.tab button {
+	  background-color: inherit;
+	  float: left;
+	  border: none;
+	  outline: none;
+	  cursor: pointer;
+	  padding: 14px 16px;
+	  transition: 0.3s;
+	  font-size: 17px;
+	}
+
+	/* Change background color of buttons on hover */
+	.tab button:hover {
+	  background-color: #ddd;
+	}
+
+	/* Create an active/current tablink class */
+	.tab button.active {
+	  background-color: #abc;
+	}
+
+	/* Style the tab content */
+	.tabcontent {
+	  display: none;
+	  padding: 6px 12px;
+	  border: 1px solid #ccc;
+	  border-top: none;
+	  max-width: 400px;
+	}
+</style>
+</head>
+<body>
+<div id="header" class="header">
+    <h1>     Tocomo   </h1>
+    <h3> <i>Transfer Funds</i>  </h3>
+</div>
+
+<div class="tab">
+    <button class="tablinks" onclick="customerService(event, Register)">Loan Application </button>
+    <button class="tablinks active" onclick="customerService(event, Send)">Send</button>
+    <button class="tablinks" onclick="customerService(event, Transactions)">Transactions</button>
+</div>
+
+
+<div id="Send" class="tabcontent" style="display: block;">
+    <form method="post" action="trx/new">
+        <div class="container" border="2px," black="">
+            <h1> Send Money </h1>
+            <p> </p>
+            <hr>
+
+            <label for="user_name"><b>User Name</b></label>
+            <input type="text" placeholder="User Name" name="user_name" id="user_name" required=""/>
+            <br>
+            <label for="client_name"><b>Send To</b></label>
+            <input type="text" placeholder="Send To" name="client_name" id="client_name" required=""/>
+            <br>
+            <label for="amount"><b>Send Amount</b></label>
+            <input type="double" placeholder="$0.00" name="amount" id="amount" required=""/>
+            <br><br>
+            <div class="footer">
+                <label for="cRate"><b><i>Conversion Rate: 1:1 </i></b></label>
+                <br>
+                <label for="fAmount"><b><i>Receive Amount:</i></b></label><i><i>
+            </i></i></div>
+            <i>
+                <div class="formBtn">
+                    <p>Click the Submit button to Continue!.</p>
+                    <button type="submit" class="sendBtn">Send cash</button></div>
+            </i></div><i><i>
+        <br>
+        <br>
+
+        <div class="Sender">
+            <p> <a href="/trx">View Activity</a>.</p>
+
+        </div>
+
+    </i></i></form></div><i><i>
+
+    <div id="Register" class="tabcontent" style="display: none;">
+        <form method="post" action="cust/new">
+            <div class="container">
+                <h1>Register</h1>
+                <p>Please fill in the form to create an account.</p>
+                <br>
+
+                <label for="user_name"><b>User Name</b></label>
+                <input type="text" placeholder="User Name" name="user_name" id="user_name" required="">
+                <br>
+                <label for="name"><b>Name</b></label>
+                <input type="text" placeholder="Smith John" name="name" id="name" required="">
+                <br>
+                <br>
+
+                <p>Click the Submit Button to Register .</p>
+                <button type="Register" class="registerbtn">Register</button>
+            </div>
+            <br>
+            <br>
+            <div> <a href="/cust"> View All Customers </a></div>
+
+
+        </form></div>
+
+
+    <div id="Transactions" class="tabcontent" style="display: none;">
+        <h2> Activity Details </h2>
+        <div>
+            <a href = "/trx">
+                <button type="Submit" class="submitBtn">View Activity</button>
+            </a>
+            <select id="myselect" onchange="change_myselect(this.value)">
+                <option value="">Choose an option:</option>
+                <option value="customers">Customers</option>
+                <option value="trx">Transactions</option>
+            </select>
+            <p id="tableView"></p>
+            <script>
+			function change_myselect(sel) {
+			  const dbParam = JSON.stringify({table:sel,limit:10});
+			  const xmlhttp = new XMLHttpRequest();
+			  xmlhttp.onload = function() {
+				const myObj = JSON.parse(this.responseText);
+				let text = "<table border='1'>"
+				for (let x in myObj) {
+				  text += "<tr><td>" + myObj[x].name + "</td></tr>";
+				}
+				text += "</table>"
+				document.getElementById("tableView").innerHTML = txt;
+			  }
+			  xmlhttp.open("POST", text);
+			  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			  xmlhttp.send("x=" + dbParam);
+			}
+	</script>
+
+
+        </div>
+    </div>
+
+
+
+    <script>
+	function customerService(evt, Request) {
+	  var i, tabcontent, tablinks;
+	  tabcontent = document.getElementsByClassName("tabcontent");
+	  for (i = 0; i < tabcontent.length; i++) {
+		tabcontent[i].style.display = "none";
+	  }
+	  tablinks = document.getElementsByClassName("tablinks");
+	  for (i = 0; i < tablinks.length; i++) {
+		tablinks[i].className = tablinks[i].className.replace(" active", "");
+	  }
+	  document.getElementById(Request).style.display = "block";
+	  evt.currentTarget.className += " active";
+	}
+</script>
+
+</i></i></body></html>
