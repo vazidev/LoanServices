@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: Loan Services
+cassandra:
+  contactPoint: localhost
+  keyspace: investapp
+  tableName: loans
+
+  Application:
+    dbName: cassdb
+
+server:
+  port: 0

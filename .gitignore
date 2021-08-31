@@ -32,7 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-### Temp Development files
+### Temp Development and Testing files
 /Hello.java
-/test
+/test*
+/schema.cql
 
